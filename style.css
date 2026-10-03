@@ -1,0 +1,345 @@
+/* ===== VARIABLES: cambia los colores aquí ===== */
+:root {
+  --wine-deep: #2A0A12;   /* fondo oscuro */
+  --wine: #5C1426;        /* borgoña */
+  --cherry: #8E1F36;      /* rojo cereza */
+  --ivory: #F6EFE2;       /* crema / marfil */
+  --gold: #C9A24B;        /* dorado */
+  --beige: #E3D3B4;       /* beige */
+
+  --font-title: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", system-ui, -apple-system, sans-serif;
+  --font-hand: "Caveat", "Segoe Script", cursive;
+
+  --tap-min: 48px;        /* tamaño mínimo cómodo para tocar con el dedo */
+  --pad-x: 24px;          /* margen lateral de las pantallas */
+}
+
+* { box-sizing: border-box; margin: 0; }
+html, body {
+  height: 100%; max-width: 100%;
+  overflow: hidden;                   /* el scroll vive dentro de cada .stage */
+  overscroll-behavior: none;          /* evita "tirar para recargar" sin querer */
+  background: var(--wine-deep);
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%; /* iOS no agranda textos al girar */
+}
+body {
+  font-family: var(--font-body); color: var(--ivory);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;         /* quita el retraso y el zoom por doble toque */
+}
+button { -webkit-appearance: none; appearance: none; font-family: inherit; touch-action: manipulation; }
+
+/* ===== ETAPAS ===== */
+.stage {
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+  display: flex; flex-direction: column;
+  /* respeta notch y barra inferior del iPhone */
+  padding: max(20px, env(safe-area-inset-top)) max(var(--pad-x), env(safe-area-inset-right))
+           max(20px, env(safe-area-inset-bottom)) max(var(--pad-x), env(safe-area-inset-left));
+  text-align: center;
+  overflow-x: hidden; overflow-y: auto;   /* si el contenido no cabe, se puede bajar */
+  -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  background: radial-gradient(ellipse at 50% 30%, var(--wine) 0%, var(--wine-deep) 70%);
+  visibility: hidden; opacity: 0; transition: opacity .8s ease, visibility .8s;
+}
+.stage.is-active { visibility: visible; opacity: 1; }
+.stage--paper { background: var(--ivory); color: var(--wine); }
+
+/* "margin: auto" centra sin recortar la parte de arriba cuando hay scroll
+   (justify-content: center sí la recortaría en pantallas bajas) */
+.stage__inner {
+  margin: auto; width: 100%; max-width: 420px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  position: relative; z-index: 1;
+}
+
+/* ===== TORTA ===== */
+/* Primero un ancho sencillo (por si el navegador no entiende dvh) y luego el mejorado */
+.cake {
+  position: relative; flex: none;
+  width: min(66vw, 300px, 38vh);
+  width: min(66vw, 300px, 38dvh);
+  opacity: 0; transform: translateY(14px) scale(.96);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+}
+.cake.is-visible { opacity: 1; transform: none; }
+.cake__art { display: block; width: 100%; height: auto; overflow: visible; }
+.cake__glow {
+  position: absolute; left: -25%; right: -25%; top: -30%; height: 110%;
+  background: radial-gradient(circle at 50% 42%, rgba(255,205,120,.28), transparent 60%);
+  transition: opacity 1.2s ease; pointer-events: none;
+}
+.cake.is-out .cake__glow { opacity: 0; }
+
+/* Llama */
+.flame__body { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker 1.3s ease-in-out infinite alternate; }
+.flame__glow { animation: pulse 2s ease-in-out infinite alternate; }
+@keyframes flicker { 0% { transform: scale(1, 1) rotate(-2deg); } 50% { transform: scale(.94, 1.06) rotate(2deg); } 100% { transform: scale(1.04, .96) rotate(-1deg); } }
+@keyframes pulse { from { opacity: .7; } to { opacity: 1; } }
+.flame { transition: opacity .35s ease; }
+.cake.is-out .flame { opacity: 0; }
+
+/* Humo al apagar */
+.smoke { opacity: 0; stroke-dasharray: 70; stroke-dashoffset: 70; }
+.cake.is-out .smoke { animation: smoke 2.4s ease-out forwards; }
+@keyframes smoke { 0% { opacity: .8; stroke-dashoffset: 70; } 100% { opacity: 0; stroke-dashoffset: 0; transform: translateY(-14px); } }
+
+/* Zona táctil de la vela: amplia y nunca menor al mínimo para dedos */
+.candle-hit {
+  position: absolute; left: 50%; top: 2%; width: 30%; min-width: var(--tap-min); height: 48%; transform: translateX(-50%);
+  background: none; border: 0; padding: 0; cursor: pointer; border-radius: 16px;
+}
+.candle-hit:disabled { cursor: default; }
+.candle-hit:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
+
+/* ===== TEXTOS (ambos bloques ocupan el mismo espacio para evitar saltos) ===== */
+.copy { display: grid; margin-top: 18px; width: 100%; }
+.copy > * { grid-area: 1 / 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; }
+.copy__intro { transition: opacity .6s ease; }
+.copy.is-done .copy__intro { opacity: 0; pointer-events: none; }
+
+.line { font-family: var(--font-title); font-style: italic; font-size: clamp(1.4rem, 6vw, 1.8rem); line-height: 1.3; color: var(--ivory); opacity: 0; transform: translateY(8px); transition: opacity 1.4s ease, transform 1.4s ease; }
+.line.is-visible, .hint.is-visible { opacity: 1; transform: none; }
+.hint { font-family: var(--font-hand); font-size: 1.5rem; color: var(--gold); opacity: 0; transition: opacity 1s ease; margin-top: 6px; }
+.hint.is-visible { animation: nudge 2.2s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(-4px); } }
+
+.copy__message { opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity 1.2s ease, transform 1.2s ease; }
+.copy__message.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.date { font-family: var(--font-hand); font-size: 1.4rem; color: var(--gold); }
+.stage--paper .date { color: var(--cherry); }
+.title { font-family: var(--font-title); font-weight: 600; font-size: clamp(1.9rem, 9vw, 2.6rem); line-height: 1.1; text-wrap: balance; overflow-wrap: anywhere; }
+.title--dark { color: var(--wine); }
+.sub { font-size: 1rem; line-height: 1.5; color: var(--beige); max-width: 30ch; }
+.sub--dark { color: var(--cherry); }
+
+/* ===== BOTÓN ===== */
+.btn {
+  margin-top: 8px; min-height: var(--tap-min); max-width: 100%; padding: 14px 28px; border-radius: 999px;
+  font-size: 1rem; font-weight: 500; letter-spacing: .02em; cursor: pointer;
+  color: var(--wine-deep); background: linear-gradient(180deg, #E0BC63, var(--gold));
+  border: 1px solid #E8CF8E; box-shadow: 0 6px 22px rgba(0,0,0,.35);
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity 1s ease, transform 1s ease, filter .2s;
+}
+.copy__message.is-ready .btn { opacity: 1; transform: none; pointer-events: auto; }
+.btn:active { filter: brightness(.92); transform: scale(.97); }
+.btn:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+.btn--ghost { opacity: 1; transform: none; pointer-events: auto; background: none; color: var(--wine); border-color: var(--wine); box-shadow: none; }
+
+/* ===== PARTÍCULAS DE FONDO Y CONFETI ===== */
+.specks { position: fixed; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden; pointer-events: none; }
+.specks span { position: absolute; bottom: -10px; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); opacity: 0; animation: rise linear infinite; will-change: transform; }
+@keyframes rise { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: .55; } 100% { transform: translateY(-110vh); opacity: 0; } }
+.confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+/* ===== CORTINA DE TRANSICIÓN ===== */
+.curtain { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10; background: var(--wine-deep); opacity: 0; pointer-events: none; transition: opacity .9s ease; }
+.curtain.is-on { opacity: 1; pointer-events: auto; }
+
+/* ===== AJUSTES POR TAMAÑO DE PANTALLA ===== */
+/* Teléfonos muy angostos (iPhone SE, Android pequeños) */
+@media (max-width: 360px) {
+  :root { --pad-x: 16px; }
+  .btn { padding-left: 20px; padding-right: 20px; }
+}
+/* Pantallas bajas en vertical: torta un poco más pequeña para que todo quepa sin scroll */
+@media (max-height: 700px) {
+  .cake { width: min(58vw, 240px, 32vh); width: min(58vw, 240px, 32dvh); }
+  .copy { margin-top: 10px; }
+}
+/* Teléfono girado (horizontal): torta a un lado, textos al otro */
+@media (orientation: landscape) and (max-height: 500px) {
+  .stage__inner--intro { flex-direction: row; justify-content: center; gap: 28px; max-width: 760px; text-align: left; }
+  .cake { width: min(30vw, 64vh); width: min(30vw, 64dvh); }
+  .copy { margin-top: 0; max-width: 360px; }
+  .copy > * { align-items: flex-start; }
+}
+@media (min-width: 700px) { .stage__inner { max-width: 520px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .flame__body, .flame__glow, .hint, .specks span { animation: none; }
+  * { transition-duration: .01s !important; }
+}
+
+
+/* =====================================================================
+   ETAPA 2 — DIARIO / CARTA
+   (todo lo de abajo es nuevo; la etapa 1 no se toca)
+   ===================================================================== */
+#stage-diario {
+  --paper: #F6EFE2;
+  --paper-2: #EFE3CB;
+  --ink: #4A1220;                  /* color del texto de la carta */
+  /* Hoja grande: casi todo el ancho del celular y el alto disponible, para que quepa más texto */
+  --book-w: min(92vw, 420px);
+  --book-h: min(calc(100vh - 180px), calc(var(--book-w) * 1.55));
+  --fs: 17px;                      /* tamaño del texto: script.js lo ajusta página por página */
+}
+@supports (height: 100dvh) {
+  #stage-diario { --book-h: min(calc(100dvh - 180px), calc(var(--book-w) * 1.55)); }
+}
+.stage__inner--diary { gap: 22px; max-width: none; }
+
+/* ----- Libro ----- */
+.book {
+  position: relative; flex: none; width: var(--book-w); height: var(--book-h);
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.45));
+  opacity: 0; transform: translateY(16px) scale(.97);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  touch-action: pan-y;             /* deja bajar con el dedo; los gestos laterales los manejamos nosotros */
+}
+#stage-diario.is-active .book { opacity: 1; transform: none; transition-delay: .5s; }
+
+/* Bloque de hojas con "cantos" de papel a la derecha */
+.book__pages { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 3px 9px 9px 3px; box-shadow: 3px 0 0 #E8DCC2, 5px 1px 0 #D6C8A8, 7px 2px 0 #C9BA98; }
+
+/* ----- Hojas (cada una gira sobre su lomo izquierdo) ----- */
+.leaf { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transition: opacity .2s ease, visibility 0s; }
+.leaf__flip {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  transform-origin: left center; transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  transform: perspective(1500px) rotateY(0deg);
+  transition: transform .95s cubic-bezier(.45, .05, .25, 1);
+}
+.leaf.is-flipped .leaf__flip { transform: perspective(1500px) rotateY(-168deg); }
+/* Al terminar el giro la hoja se desvanece (en pantalla angosta se saldría por la izquierda) */
+.leaf.is-flipped { opacity: 0; visibility: hidden; transition: opacity .35s ease .55s, visibility 0s .95s; }
+
+.leaf__face {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 3px 9px 9px 3px; overflow: hidden;
+  background: linear-gradient(100deg, var(--paper-2) 0, var(--paper) 9%, var(--paper) 100%);
+}
+.leaf__front { box-shadow: inset 10px 0 12px -10px rgba(74,18,32,.35); }
+/* Reverso de la hoja (lo que se ve mientras gira): papel liso */
+.leaf__back { transform: rotateY(180deg); background: linear-gradient(260deg, var(--paper-2) 0, var(--paper) 14%, var(--paper-2) 100%); }
+
+/* ----- Contenido de cada página ----- */
+.page {
+  height: 100%; display: flex; flex-direction: column; position: relative;
+  padding: 8% 7% 4% 10%; color: var(--ink);
+}
+.page__head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 10px; padding-bottom: 6px; flex: none; border-bottom: 1px solid rgba(201,162,75,.5); }
+.page__title { font-family: var(--font-hand); font-size: 1.45rem; line-height: 1.15; color: var(--cherry); }
+.page__fecha { font-family: var(--font-hand); font-size: 1.05rem; color: #9C7A2E; white-space: nowrap; }
+
+/* Cuerpo de la página: el texto ocupa todo el espacio libre y, si no cabe, se desliza por dentro */
+.page__body { flex: 1; min-height: 0; position: relative; }
+.page__text {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+  padding-right: 6px;
+  font-family: var(--font-title); font-weight: 500; text-align: left;
+  font-size: var(--fs); line-height: 1.5;                 /* --fs lo calcula script.js */
+  overflow-wrap: break-word;
+  scrollbar-width: thin; scrollbar-color: rgba(142,31,54,.35) transparent;
+}
+.page__text p { margin: 0 0 .8em; }                      /* separación entre párrafos */
+.page__text p:last-child { margin-bottom: 1.8em; }       /* aire al final para que el "sigue" no tape texto */
+.page__text .saludo { font-style: italic; color: var(--cherry); font-size: 1.1em; }
+.page__text .destacado { font-style: italic; text-align: center; color: var(--cherry); font-size: 1.12em; margin-top: 1em; }
+
+/* Aviso "↓ sigue": aparece solo mientras haya más texto por leer */
+.page__more {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 46px; padding-bottom: 2px;
+  display: flex; align-items: flex-end; justify-content: center; pointer-events: none;
+  font-family: var(--font-hand); font-size: 1.15rem; color: var(--cherry);
+  background: linear-gradient(to bottom, rgba(246,239,226,0), var(--paper) 80%);
+  opacity: 0; transition: opacity .3s ease;
+}
+.page__body.has-more .page__more { opacity: 1; }
+
+.page__num { flex: none; text-align: center; font-family: var(--font-hand); font-size: 1.15rem; color: #9C7A2E; padding-top: 6px; }
+.page__num::before, .page__num::after { content: "·"; margin: 0 8px; opacity: .7; }
+.page__flor { position: absolute; width: 30px; height: 30px; color: #C9A24B; opacity: .4; pointer-events: none; }
+.page__flor--a { right: 6%; bottom: 2.5%; transform: rotate(18deg); }
+.page__flor--b { left: 10%; bottom: 2.5%; transform: rotate(-12deg) scaleX(-1); }
+
+/* ----- Portada ----- */
+.cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 50; transition: opacity .3s ease .6s, visibility 0s 1s; }
+.cover__flip {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  transform-origin: left center; transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  transform: perspective(1600px) rotateY(0deg);
+  transition: transform 1.15s cubic-bezier(.5, .05, .25, 1);
+}
+.book.is-open .cover__flip { transform: perspective(1600px) rotateY(-170deg); }
+.book.is-open .cover { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.cover__face { position: absolute; top: 0; left: 0; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 3px 10px 10px 3px; }
+.cover__front {
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.45) 0, rgba(0,0,0,0) 7%, rgba(255,255,255,.06) 9%, rgba(0,0,0,0) 12%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.025) 0 2px, transparent 2px 5px),
+    linear-gradient(160deg, #7A1B2E 0%, var(--wine) 55%, #3C0E1A 100%);
+  box-shadow: inset 0 0 0 1px rgba(201,162,75,.25);
+  display: flex; align-items: center; justify-content: center; padding: 9% 8% 9% 12%;
+}
+.cover__inside { transform: rotateY(180deg); background: linear-gradient(260deg, var(--wine) 0, #4A1020 100%); }
+
+/* Marco dorado y textos de la portada */
+.cover__frame {
+  width: 100%; height: 100%; border: 1.5px solid var(--gold); outline: 1px solid rgba(201,162,75,.45); outline-offset: -7px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 12% 6% 0; gap: 6px; text-align: center;
+}
+.cover__flor { width: 44px; height: 44px; color: var(--gold); }
+.cover__pre { font-family: var(--font-hand); font-size: 1.5rem; color: var(--gold); margin-top: 6px; }
+.cover__name { font-family: var(--font-title); font-style: italic; font-weight: 600; font-size: clamp(2rem, 10vw, 2.8rem); line-height: 1.05; color: var(--ivory); overflow-wrap: anywhere; }
+.cover__line { width: 46%; height: 1px; margin: 8px 0 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.cover__date { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--beige); opacity: .85; }
+
+/* ----- Candado ----- */
+.lock {
+  position: absolute; left: 55%; bottom: 8%; transform: translateX(-50%);
+  width: 64px; height: 64px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; background: rgba(42,10,18,.35);
+  display: grid; place-items: center; animation: lockGlow 2.6s ease-in-out infinite;
+}
+.lock svg { width: 34px; height: 40px; overflow: visible; }
+.lock__body { fill: var(--gold); transition: fill .4s ease; }
+.lock__shackle { transform-box: fill-box; transform-origin: 100% 100%; transition: transform .6s cubic-bezier(.3, 1.4, .5, 1); }
+.lock:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+@keyframes lockGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,75,.0); } 50% { box-shadow: 0 0 0 9px rgba(201,162,75,.16); } }
+/* Desbloqueado: el arco se levanta y se abre */
+.lock.is-unlocked { animation: none; pointer-events: none; }
+.lock.is-unlocked .lock__shackle { transform: translateY(-5px) rotate(-32deg); }
+.lock.is-unlocked .lock__body { fill: #F2DDA0; }
+/* Destellos al desbloquear (los crea script.js) */
+.spark { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px; border-radius: 50%; background: #F2DDA0; opacity: 0; animation: spark .9s ease-out forwards; }
+@keyframes spark { 0% { opacity: 1; transform: translate(0,0) scale(1); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.3); } }
+
+/* ----- Pista y controles ----- */
+.diary__footer { display: grid; width: 100%; justify-items: center; }
+.diary__footer > * { grid-area: 1 / 1; }
+.diary__hint { font-family: var(--font-hand); font-size: 1.5rem; color: var(--gold); opacity: 0; transition: opacity 1s ease; align-self: center; }
+#stage-diario.is-active .diary__hint { opacity: 1; transition-delay: 1.8s; animation: nudge 2.2s ease-in-out 2.8s infinite; }
+.diary__hint.is-hidden { opacity: 0 !important; animation: none !important; transition-delay: 0s !important; }
+
+.controls { display: flex; align-items: center; justify-content: center; gap: 14px; visibility: hidden; opacity: 0; transition: opacity .8s ease; }
+.controls.is-visible { visibility: visible; opacity: 1; }
+.controls__count { min-width: 62px; text-align: center; font-family: var(--font-hand); font-size: 1.4rem; color: var(--beige); }
+.nav {
+  width: var(--tap-min); height: var(--tap-min); border-radius: 50%; padding: 0; cursor: pointer;
+  background: rgba(246,239,226,.06); border: 1px solid rgba(201,162,75,.7); color: var(--ivory);
+  display: grid; place-items: center; transition: background .2s, opacity .3s;
+}
+.nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav:active { background: rgba(201,162,75,.25); }
+.nav:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+.nav:disabled { opacity: .25; cursor: default; }
+.diary__continue { display: none; margin: 0; padding: 12px 24px; }
+.controls.is-last #next { display: none; }
+.controls.is-last .diary__continue { display: inline-block; }
+.btn--show { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ----- Ajustes por pantalla (diario) ----- */
+@media (max-height: 700px) { .stage__inner--diary { gap: 12px; } }
+@media (max-width: 360px) { .controls { gap: 10px; } }
+/* Teléfono girado: la hoja usa todo el alto disponible */
+@media (orientation: landscape) and (max-height: 500px) {
+  #stage-diario { --book-w: min(86vw, 640px); --book-h: calc(100vh - 130px); }
+  @supports (height: 100dvh) { #stage-diario { --book-h: calc(100dvh - 130px); } }
+}
+@media (prefers-reduced-motion: reduce) { .lock, .diary__hint { animation: none !important; } }

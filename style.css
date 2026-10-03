@@ -207,6 +207,13 @@ button { -webkit-appearance: none; appearance: none; font-family: inherit; touch
 /* Al terminar el giro la hoja se desvanece (en pantalla angosta se saldría por la izquierda) */
 .leaf.is-flipped { opacity: 0; visibility: hidden; transition: opacity .35s ease .55s, visibility 0s .95s; }
 
+/* Hoja en reposo (la que se está leyendo): se le quita todo el 3D.
+   En el celular, un texto con scroll dentro de capas 3D no responde al dedo.
+   script.js pone esta clase cuando termina el giro y la quita cuando va a girar. */
+.leaf.is-settled .leaf__flip { transform: none; transform-style: flat; -webkit-transform-style: flat; transition: none; }
+.leaf.is-settled .leaf__face { backface-visibility: visible; -webkit-backface-visibility: visible; }
+.leaf.is-settled .leaf__back { display: none; }
+
 .leaf__face {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
@@ -231,7 +238,7 @@ button { -webkit-appearance: none; appearance: none; font-family: inherit; touch
 .page__text {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
-  padding-right: 6px;
+  padding-right: 6px; touch-action: pan-y;                /* el dedo puede desplazar el texto hacia abajo */
   font-family: var(--font-title); font-weight: 500; text-align: left;
   font-size: var(--fs); line-height: 1.5;                 /* --fs lo calcula script.js */
   overflow-wrap: break-word;

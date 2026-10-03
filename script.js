@@ -191,7 +191,7 @@ const CARTA = [
       "Santimaye.",
       "Y todas esas pequeñas cosas que probablemente ni siquiera tendrían gracia si intentáramos explicárselas a alguien más.",
       "Pero creo que precisamente eso es lo bonito de esta amistad.",
-      "Tener historias que solamente nosotras enténdemos.",
+      "Tener historias que solamente nosotras entiéndenos.",
       "Tener palabras que significan muchísimo más de lo que parecen.",
       "Tener recuerdos que pueden aparecer de la nada y hacerte reír porque solamente tú sabes todo lo que hay detrás.",
       "Y creo que si algo me encanta de nuestra amistad es que no solamente tengo una amiga con la que hablo. Tengo una persona con la que tengo una historia.",
@@ -352,15 +352,36 @@ function fitAllPages() {
 
 /* ---------- Mostrar la página actual ----------
    Las hojas anteriores a "current" quedan giradas (is-flipped); el resto, en su lugar. */
+let settleTimer;
 function updateDiary() {
-  pagesBox.querySelectorAll(".leaf").forEach((leaf, i) => {
-    leaf.classList.toggle("is-flipped", i < current);
+  const leaves = pagesBox.querySelectorAll(".leaf");
+  clearTimeout(settleTimer);
+
+  // 1) Las hojas que van a girar salen del "reposo" y vuelven al modo 3D
+  leaves.forEach((leaf, i) => {
+    if (leaf.classList.contains("is-flipped") !== i < current) leaf.classList.remove("is-settled");
     leaf.setAttribute("aria-hidden", i === current ? "false" : "true");
   });
+  void pagesBox.offsetWidth; // obliga al navegador a aplicar ese cambio antes de empezar a girar
+
+  // 2) Ahora sí giran
+  requestAnimationFrame(() => {
+    leaves.forEach((leaf, i) => leaf.classList.toggle("is-flipped", i < current));
+  });
+
+  // 3) Al terminar el giro, la hoja actual queda en reposo (sin 3D) para poder desplazar el texto
+  settleTimer = setTimeout(settleCurrent, 1100);
+
   counter.textContent = `${current + 1} / ${CARTA.length}`;
   prevBtn.disabled = current === 0;
   controls.classList.toggle("is-last", current === CARTA.length - 1);
   pagesBox.querySelectorAll(".page__text")[current]?.scrollTo(0, 0);
+}
+
+// Deja solo la hoja que se está leyendo en "reposo" (ver .is-settled en style.css)
+function settleCurrent() {
+  if (!diaryOpen) return;
+  pagesBox.querySelectorAll(".leaf").forEach((leaf, i) => leaf.classList.toggle("is-settled", i === current));
 }
 
 function turnPage(delta) {
@@ -393,6 +414,7 @@ async function unlockDiary() {
   book.classList.add("is-open");         // la portada gira y se abre
   diaryOpen = true;
   await wait(1000);
+  settleCurrent();                       // la primera hoja queda lista para desplazar el texto
   controls.classList.add("is-visible");  // aparecen las flechas
 }
 

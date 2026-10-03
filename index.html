@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#2A0A12">
-  <title>Para ti ♡</title>
-  <!-- Fuentes (opcional, requieren internet). Si no cargan, se usan las de respaldo. -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2A0A12">
+    <title>Para ti ♡</title>
+    <!-- Fuentes (opcional, requieren internet). Si no cargan, se usan las de respaldo. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- ETAPA 1: INTRODUCCIÓN -->
-  <section class="stage is-active" id="stage-intro">
-    <div class="specks" id="specks" aria-hidden="true"></div>
+    <!-- ETAPA 1: INTRODUCCIÓN -->
+    <section class="stage is-active" id="stage-intro">
+        <div class="specks" id="specks" aria-hidden="true"></div>
 
-    <!-- .stage__inner centra el contenido pero deja hacer scroll si la pantalla es muy baja -->
-    <div class="stage__inner stage__inner--intro">
-      <div class="cake" id="cake">
-        <div class="cake__glow" aria-hidden="true"></div>
-        <svg class="cake__art" viewBox="0 0 240 250" role="img" aria-label="Torta de cumpleaños con una vela encendida">
+        <!-- .stage__inner centra el contenido pero deja hacer scroll si la pantalla es muy baja -->
+        <div class="stage__inner stage__inner--intro">
+            <div class="cake" id="cake">
+                <div class="cake__glow" aria-hidden="true"></div>
+                <svg class="cake__art" viewBox="0 0 240 250" role="img" aria-label="Torta de cumpleaños con una vela encendida">
           <defs>
             <radialGradient id="glow"><stop offset="0" stop-color="#FFD98A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
             <linearGradient id="fire" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F29A38"/><stop offset="1" stop-color="#FFE9A8"/></linearGradient>
@@ -55,35 +57,35 @@
           <!-- humo -->
           <path class="smoke" d="M120 50 c-7 -10 7 -16 0 -28 c-5 -8 3 -12 0 -18" fill="none" stroke="#F6EFE2" stroke-width="2" stroke-linecap="round"/>
         </svg>
-        <!-- Zona táctil de la vela (botón real = accesible) -->
-        <button class="candle-hit" id="candle" type="button" disabled aria-label="Apagar la vela"></button>
-      </div>
+                <!-- Zona táctil de la vela (botón real = accesible) -->
+                <button class="candle-hit" id="candle" type="button" disabled aria-label="Apagar la vela"></button>
+            </div>
 
-      <div class="copy">
-        <!-- Texto de introducción -->
-        <div class="copy__intro" id="intro-text">
-          <p class="line" id="line1">Hoy es un día especial…</p>
-          <p class="line" id="line2">porque alguien muy especial<br>está cumpliendo años.</p>
-          <p class="hint" id="hint">pide un deseo, y toca la vela</p>
+            <div class="copy">
+                <!-- Texto de introducción -->
+                <div class="copy__intro" id="intro-text">
+                    <p class="line" id="line1">Hoy es un día especial…</p>
+                    <p class="line" id="line2">porque alguien muy especial<br>está cumpliendo años.</p>
+                    <p class="hint" id="hint">pide un deseo, y toca la vela</p>
+                </div>
+                <!-- Mensaje tras apagar la vela -->
+                <div class="copy__message" id="message">
+                    <p class="date" data-fecha></p>
+                    <h1 class="title">Feliz cumpleaños,<br><span data-nombre></span></h1>
+                    <p class="sub">Pide un deseo, que este año se viene con todo.</p>
+                    <button class="btn" id="continue" type="button" disabled>♡ Tengo algo para ti</button>
+                </div>
+            </div>
         </div>
-        <!-- Mensaje tras apagar la vela -->
-        <div class="copy__message" id="message">
-          <p class="date" data-fecha></p>
-          <h1 class="title">Feliz cumpleaños,<br><span data-nombre></span></h1>
-          <p class="sub">Pide un deseo, que este año se viene con todo.</p>
-          <button class="btn" id="continue" type="button" disabled>♡ Tengo algo para ti</button>
-        </div>
-      </div>
-    </div>
 
-    <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
-  </section>
+        <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+    </section>
 
-  <!-- ETAPA 2: DIARIO / CARTA -->
-  <section class="stage" id="stage-diario">
+    <!-- ETAPA 2: DIARIO / CARTA -->
+    <section class="stage" id="stage-diario">
 
-    <!-- Dibujo reutilizable de la florecita (las páginas lo llaman con <use href="#flor">) -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <!-- Dibujo reutilizable de la florecita (las páginas lo llaman con <use href="#flor">) -->
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="flor" viewBox="0 0 40 40">
         <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
           <circle cx="20" cy="20" r="3"/>
@@ -93,25 +95,25 @@
       </symbol>
     </svg>
 
-    <div class="stage__inner stage__inner--diary">
+        <div class="stage__inner stage__inner--diary">
 
-      <div class="book" id="book">
-        <!-- Hojas de la carta: las crea script.js a partir de la lista CARTA -->
-        <div class="book__pages" id="pages"></div>
+            <div class="book" id="book">
+                <!-- Hojas de la carta: las crea script.js a partir de la lista CARTA -->
+                <div class="book__pages" id="pages"></div>
 
-        <!-- Portada (se abre girando hacia la izquierda, como un libro de verdad) -->
-        <div class="cover" id="cover">
-          <div class="cover__flip">
-            <div class="cover__face cover__front">
-              <div class="cover__frame">
-                <svg class="cover__flor" aria-hidden="true"><use href="#flor"/></svg>
-                <p class="cover__pre">Para</p>
-                <h2 class="cover__name" data-nombre></h2>
-                <span class="cover__line" aria-hidden="true"></span>
-                <p class="cover__date" data-fecha></p>
-              </div>
-              <!-- Candado: al tocarlo se desbloquea el diario -->
-              <button class="lock" id="lock" type="button" aria-label="Desbloquear el diario">
+                <!-- Portada (se abre girando hacia la izquierda, como un libro de verdad) -->
+                <div class="cover" id="cover">
+                    <div class="cover__flip">
+                        <div class="cover__face cover__front">
+                            <div class="cover__frame">
+                                <svg class="cover__flor" aria-hidden="true"><use href="#flor"/></svg>
+                                <p class="cover__pre">Para</p>
+                                <h2 class="cover__name" data-nombre></h2>
+                                <span class="cover__line" aria-hidden="true"></span>
+                                <p class="cover__date" data-fecha></p>
+                            </div>
+                            <!-- Candado: al tocarlo se desbloquea el diario -->
+                            <button class="lock" id="lock" type="button" aria-label="Desbloquear el diario">
                 <svg viewBox="0 0 48 56" aria-hidden="true">
                   <path class="lock__shackle" d="M14 27V18a10 10 0 0 1 20 0v9" fill="none" stroke="#E3C98A" stroke-width="4" stroke-linecap="round"/>
                   <rect class="lock__body" x="8" y="26" width="32" height="26" rx="6"/>
@@ -119,34 +121,35 @@
                   <rect x="22.6" y="38" width="2.8" height="7" rx="1.4" fill="#5C1426"/>
                 </svg>
               </button>
+                        </div>
+                        <div class="cover__face cover__inside"></div>
+                    </div>
+                </div>
             </div>
-            <div class="cover__face cover__inside"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Pista y controles ocupan el mismo lugar bajo el libro -->
-      <div class="diary__footer">
-        <p class="diary__hint" id="diary-hint">toca el candado</p>
-        <div class="controls" id="controls">
-          <button class="nav" id="prev" type="button" aria-label="Página anterior">
+            <!-- Pista y controles ocupan el mismo lugar bajo el libro -->
+            <div class="diary__footer">
+                <p class="diary__hint" id="diary-hint">toca el candado</p>
+                <div class="controls" id="controls">
+                    <button class="nav" id="prev" type="button" aria-label="Página anterior">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
           </button>
-          <span class="controls__count" id="counter" aria-live="polite"></span>
-          <button class="nav" id="next" type="button" aria-label="Página siguiente">
+                    <span class="controls__count" id="counter" aria-live="polite"></span>
+                    <button class="nav" id="next" type="button" aria-label="Página siguiente">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
           </button>
-          <!-- Solo aparece en la última página -->
-          <button class="btn btn--show diary__continue" id="diary-continue" type="button">Continuar →</button>
+                    <!-- Solo aparece en la última página -->
+                    <button class="btn btn--show diary__continue" id="diary-continue" type="button">Continuar →</button>
+                </div>
+            </div>
+
         </div>
-      </div>
+    </section>
 
-    </div>
-  </section>
+    <!-- Cortina para las transiciones entre etapas -->
+    <div class="curtain" id="curtain" aria-hidden="true"></div>
 
-  <!-- Cortina para las transiciones entre etapas -->
-  <div class="curtain" id="curtain" aria-hidden="true"></div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

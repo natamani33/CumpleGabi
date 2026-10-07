@@ -350,3 +350,116 @@ button { -webkit-appearance: none; appearance: none; font-family: inherit; touch
   @supports (height: 100dvh) { #stage-diario { --book-h: calc(100dvh - 130px); } }
 }
 @media (prefers-reduced-motion: reduce) { .lock, .diary__hint { animation: none !important; } }
+
+
+/* =====================================================================
+   ETAPA 3 — NUESTROS RECUERDOS (carrusel)
+   (todo lo de abajo es nuevo; las etapas 1 y 2 no se tocan)
+   Sin alturas fijas: la página puede crecer y se desplaza con normalidad.
+   ===================================================================== */
+.stage__inner--memories { max-width: 460px; gap: 18px; padding: 8px 0; }
+
+.memories__head { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.memories__line { width: 90px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.carousel { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+/* Zona de la foto: permite deslizar de lado con JS sin bloquear el scroll vertical */
+.carousel__viewport { width: 100%; touch-action: pan-y; }
+.memory { margin: 0; -webkit-user-select: none; user-select: none; }
+
+/* Marco tipo papel con sombra suave */
+.memory__frame {
+  background: var(--paper, #F6EFE2); padding: 10px; border-radius: 6px;
+  box-shadow: 0 14px 28px rgba(0,0,0,.45), inset 0 0 0 1px rgba(201,162,75,.35);
+}
+/* La foto se adapta al ancho, conserva su proporción y nunca se recorta */
+.memory__img {
+  display: block; width: 100%; height: auto; border-radius: 3px; object-fit: contain; background: #E9DFC9;
+  max-height: 62vh; max-height: 62dvh; -webkit-user-drag: none;
+}
+.memory__missing {
+  display: none; min-height: 280px; padding: 20px; border: 1px dashed rgba(142,31,54,.5); border-radius: 3px;
+  align-items: center; justify-content: center; text-align: center;
+  font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.3; color: var(--cherry);
+}
+.memory.is-missing .memory__img { display: none; }
+.memory.is-missing .memory__missing { display: flex; }
+
+.memory__caption { margin-top: 10px; text-align: center; font-family: var(--font-hand); font-size: 1.3rem; color: var(--gold); min-height: 1.3em; }
+
+/* Entrada suave al cambiar de foto */
+.memory.from-next { animation: memNext .5s ease both; }
+.memory.from-prev { animation: memPrev .5s ease both; }
+@keyframes memNext { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+@keyframes memPrev { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
+
+.carousel__nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
+
+/* Botón "Lo que recuerdo de ese día" */
+.memory__btn {
+  min-height: var(--tap-min); max-width: 100%; padding: 12px 24px; border-radius: 999px; cursor: pointer;
+  font-size: .98rem; font-weight: 500; letter-spacing: .02em; color: var(--ivory);
+  background: rgba(246,239,226,.06); border: 1px solid rgba(201,162,75,.75);
+  transition: background .25s ease, color .25s ease;
+}
+.memory__btn:active { background: rgba(201,162,75,.25); }
+.memory__btn.is-open { background: rgba(201,162,75,.18); }
+.memory__btn:focus-visible { outline: 2px solid var(--ivory); outline-offset: 3px; }
+
+/* Descripción: se despliega con fade + deslizamiento (la altura se adapta al texto, sin alturas fijas) */
+.reveal {
+  width: 100%; display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-8px); visibility: hidden;
+  transition: grid-template-rows .6s ease, opacity .6s ease, transform .6s ease, visibility 0s .6s;
+}
+.reveal.is-open { grid-template-rows: 1fr; opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+.reveal__inner { min-height: 0; overflow: hidden; }
+.reveal__card {
+  margin: 2px 0 6px; padding: 18px 20px; border-radius: 6px; text-align: left;
+  background: var(--paper, #F6EFE2); color: #4A1220; border-left: 3px solid var(--gold);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+}
+.reveal__card p {
+  font-family: var(--font-title); font-weight: 500; font-size: clamp(1.15rem, 5vw, 1.3rem); line-height: 1.55;
+  white-space: pre-line; overflow-wrap: break-word;
+}
+
+@media (prefers-reduced-motion: reduce) { .memory { animation: none !important; } }
+
+
+/* =====================================================================
+   ETAPA 4 — PLAYLIST
+   ===================================================================== */
+.stage__inner--playlist { max-width: 460px; gap: 18px; padding: 8px 0; }
+
+/* Aparición progresiva: título -> línea -> frase -> tarjeta */
+.playlist__fade { opacity: 0; transform: translateY(12px); transition: opacity 1.1s ease, transform 1.1s ease; }
+#stage-playlist.is-active .playlist__fade { opacity: 1; transform: none; }
+#stage-playlist.is-active .playlist__title { transition-delay: .5s; }
+#stage-playlist.is-active .memories__line { transition-delay: 1.3s; }
+#stage-playlist.is-active .playlist__sub { transition-delay: 1.8s; }
+#stage-playlist.is-active .playlist__card { transition-delay: 2.9s; }
+
+.playlist__title { font-family: var(--font-title); font-style: italic; font-weight: 500; font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.2; color: var(--ivory); text-wrap: balance; }
+.playlist__sub { font-size: 1rem; line-height: 1.5; color: var(--beige); max-width: 30ch; }
+
+/* Tarjeta de papel (igual que las del diario y los recuerdos) */
+.playlist__card {
+  width: 100%; padding: 22px 20px 24px; border-radius: 8px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: var(--paper, #F6EFE2); color: #4A1220; border-left: 3px solid var(--gold);
+  box-shadow: 0 14px 28px rgba(0,0,0,.4);
+}
+.playlist__label { font-family: var(--font-hand); font-size: 1.25rem; color: #9C7A2E; }
+.playlist__name { font-family: var(--font-title); font-style: italic; font-weight: 500; font-size: clamp(1.5rem, 6.5vw, 1.9rem); line-height: 1.15; color: var(--cherry); overflow-wrap: anywhere; }
+
+/* Espacio del código de Spotify */
+.spotify-slot { width: 100%; max-width: 320px; margin-top: 6px; }
+.spotify-slot__img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.spotify-slot__missing { display: none; }
+.spotify-slot.is-missing .spotify-slot__img { display: none; }
+.spotify-slot.is-missing .spotify-slot__missing {
+  display: flex; min-height: 96px; padding: 14px; align-items: center; justify-content: center;
+  border: 1px dashed rgba(142,31,54,.5); border-radius: 8px;
+  font-family: var(--font-hand); font-size: 1.25rem; line-height: 1.3; color: var(--cherry);
+}

@@ -64,15 +64,15 @@
             <div class="copy">
                 <!-- Texto de introducción -->
                 <div class="copy__intro" id="intro-text">
-                    <p class="line" id="line1">Hoy es un día especial…</p>
+                    <p class="line" id="line1">Hoy es un día demasiado especial…</p>
                     <p class="line" id="line2">porque alguien muy especial<br>está cumpliendo años.</p>
-                    <p class="hint" id="hint">pide un deseo, y toca la vela</p>
+                    <p class="hint" id="hint">pide un deseo y toca la vela</p>
                 </div>
                 <!-- Mensaje tras apagar la vela -->
                 <div class="copy__message" id="message">
                     <p class="date" data-fecha></p>
                     <h1 class="title">Feliz cumpleaños,<br><span data-nombre></span></h1>
-                    <p class="sub">Pide un deseo, que este año se viene con todo.</p>
+                    <p class="sub"> Este año viene con todo.</p>
                     <button class="btn" id="continue" type="button" disabled>♡ Tengo algo para ti</button>
                 </div>
             </div>
@@ -140,6 +140,82 @@
           </button>
                     <!-- Solo aparece en la última página -->
                     <button class="btn btn--show diary__continue" id="diary-continue" type="button">Continuar →</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ETAPA 3: NUESTROS RECUERDOS (carrusel). Las fotos y textos se editan en script.js, lista RECUERDOS -->
+    <section class="stage" id="stage-recuerdos">
+        <div class="stage__inner stage__inner--memories">
+
+            <header class="memories__head">
+                <h2 class="title">Nuestros recuerdos</h2>
+                <span class="memories__line" aria-hidden="true"></span>
+            </header>
+
+            <div class="carousel" id="carousel">
+
+                <!-- Foto (aquí se puede deslizar el dedo hacia los lados; el scroll vertical sigue funcionando) -->
+                <div class="carousel__viewport" id="memory-viewport">
+                    <figure class="memory" id="memory">
+                        <div class="memory__frame">
+                            <img class="memory__img" id="memory-img" alt="" draggable="false">
+                            <!-- Se muestra solo si todavía no pusiste la foto -->
+                            <div class="memory__missing" id="memory-missing"></div>
+                        </div>
+                        <figcaption class="memory__caption" id="memory-caption"></figcaption>
+                    </figure>
+                </div>
+
+                <!-- Flechas y contador -->
+                <div class="carousel__nav">
+                    <button class="nav" id="memory-prev" type="button" aria-label="Recuerdo anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+                    <span class="controls__count" id="memory-counter" aria-live="polite"></span>
+                    <button class="nav" id="memory-next" type="button" aria-label="Recuerdo siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+                </div>
+
+                <!-- Botón que descubre la descripción -->
+                <button class="memory__btn" id="memory-btn" type="button" aria-expanded="false" aria-controls="memory-reveal">♡ Lo que recuerdo de ese día</button>
+                <div class="reveal" id="memory-reveal">
+                    <div class="reveal__inner">
+                        <div class="reveal__card">
+                            <p id="memory-text"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pasa a la siguiente etapa (playlist) -->
+                <button class="btn btn--show" id="memories-continue" type="button">Continuar →</button>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ETAPA 4: PLAYLIST -->
+    <section class="stage" id="stage-playlist">
+        <div class="stage__inner stage__inner--playlist">
+
+            <h2 class="playlist__title playlist__fade">Hay canciones que me recuerdan a ti.</h2>
+            <span class="memories__line playlist__fade" aria-hidden="true"></span>
+            <p class="playlist__sub playlist__fade">Así que hice una pequeña playlist con algunas de ellas.</p>
+
+            <div class="playlist__card playlist__fade">
+                <p class="playlist__label">playlist</p>
+                <h3 class="playlist__name">PARA MI GABI </h3>
+
+                <!-- ===== AQUÍ VA EL CÓDIGO DE SPOTIFY =====
+             1) Guarda tu imagen en la carpeta images/ con el nombre: spotify-playlist.png
+             2) Si tu archivo se llama distinto, cambia el nombre en el src de abajo.
+             Mientras no exista la imagen se ve el recuadro "[ AQUÍ VA EL CÓDIGO DE SPOTIFY ]". -->
+                <div class="spotify-slot">
+                    <img class="spotify-slot__img" src="images/spotifycode.jpg" alt="Código de Spotify de la playlist" onerror="this.parentNode.classList.add('is-missing')">
+                    <p class="spotify-slot__missing">[ AQUÍ VA EL CÓDIGO DE SPOTIFY ]</p>
                 </div>
             </div>
 

@@ -219,6 +219,74 @@
                 </div>
             </div>
 
+            <!-- Pasa a la siguiente etapa -->
+            <button class="btn btn--show playlist__fade" id="playlist-continue" type="button">Continuar →</button>
+
+        </div>
+    </section>
+
+    <!-- ETAPA 5: "Y ESA ERES TÚ…" -->
+    <section class="stage" id="stage-tu">
+        <div class="stage__inner stage__inner--tu">
+
+            <h2 class="tu__title tu__fade">Y esa eres tú…</h2>
+            <span class="memories__line tu__fade" aria-hidden="true"></span>
+
+            <div class="tu__photos tu__fade">
+                <!-- ===== FOTO 1 → aquí colocaré la primera imagen (images/foto9.jpeg) ===== -->
+                <figure class="tu__photo">
+                    <div class="tu__frame">
+                        <div class="tu__box">
+                            <img class="tu__img" src="images/foto9.jpeg" alt="Gabi, foto 1" onerror="this.parentNode.classList.add('is-missing')">
+                            <span class="tu__missing">FOTO 1<br>images/foto9.jpeg</span>
+                        </div>
+                    </div>
+                </figure>
+                <!-- ===== FOTO 2 → aquí colocaré la segunda imagen (images/foto10.jpeg) ===== -->
+                <figure class="tu__photo">
+                    <div class="tu__frame">
+                        <div class="tu__box">
+                            <img class="tu__img" src="images/foto10.jpeg" alt="Gabi, foto 2" onerror="this.parentNode.classList.add('is-missing')">
+                            <span class="tu__missing">FOTO 2<br>images/foto10.jpeg</span>
+                        </div>
+                    </div>
+                </figure>
+                <!-- ===== FOTO 3 → aquí colocaré la tercera imagen (images/foto11.jpeg) ===== -->
+                <figure class="tu__photo">
+                    <div class="tu__frame">
+                        <div class="tu__box">
+                            <img class="tu__img" src="images/foto11.jpeg" alt="Gabi, foto 3" onerror="this.parentNode.classList.add('is-missing')">
+                            <span class="tu__missing">FOTO 3<br>images/foto11.jpeg</span>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+
+            <p class="tu__text tu__fade">Una chica cariñosa, atenta, fuerte y con una forma muy tuya de hacer sentir bien a las personas que tienes cerca. Una persona que, incluso después de todo lo que ha vivido, sigue teniendo muchísimo que dar.</p>
+
+            <button class="btn btn--show tu__fade" id="tu-continue" type="button">Continuar →</button>
+        </div>
+    </section>
+
+    <!-- ETAPA 6: "Y PARA TERMINAR…" (cierre) -->
+    <section class="stage" id="stage-final">
+        <div class="stage__inner stage__inner--final">
+
+            <h2 class="final__title final__fade">Y para terminar…</h2>
+            <span class="memories__line final__fade" aria-hidden="true"></span>
+
+            <!-- Tarjeta sellada: al tocarla se abre y muestra la frase final -->
+            <button class="final__card final__fade" id="final-card" type="button" aria-expanded="false" aria-label="Abrir la tarjeta">
+        <span class="final__closed">
+          <svg class="final__seal" aria-hidden="true"><use href="#flor"/></svg>
+          <span class="final__tap">toca para abrir</span>
+        </span>
+        <span class="final__open" aria-hidden="true">
+          <span class="final__phrase">No es que no pueda vivir sin ti, es que simplemente no quiero vivir en un mundo en el que tu risa no exista.</span>
+        </span>
+      </button>
+            <svg class="final__flor" aria-hidden="true"><use href="#flor"/></svg>
+
         </div>
     </section>
 

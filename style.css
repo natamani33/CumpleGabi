@@ -530,3 +530,53 @@ button { -webkit-appearance: none; appearance: none; font-family: inherit; touch
 .final__card.is-open .final__open { opacity: 1; transform: none; transition-delay: .5s; }
 .final__flor { width: 34px; height: 34px; color: var(--gold); opacity: 0; transition: opacity 1.5s ease 1.4s; }
 .final__card.is-open + .final__flor { opacity: .6; }
+
+
+/* =====================================================================
+   ETAPA — CUPONES
+   ===================================================================== */
+.stage__inner--cupones { max-width: 460px; gap: 18px; padding: 8px 0 24px; }
+
+.cupones__fade { opacity: 0; transform: translateY(12px); transition: opacity 1.1s ease, transform 1.1s ease; }
+#stage-cupones.is-active .cupones__fade { opacity: 1; transform: none; }
+#stage-cupones.is-active .cupones__title { transition-delay: .5s; }
+#stage-cupones.is-active .memories__line { transition-delay: 1.2s; }
+#stage-cupones.is-active .cupones__intro { transition-delay: 1.7s; }
+#stage-cupones.is-active .cupones__list { transition-delay: 2.5s; }
+#stage-cupones.is-active #cupones-continue { transition-delay: 3.3s; }
+
+.cupones__title { font-family: var(--font-title); font-style: italic; font-weight: 500; font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.2; color: var(--ivory); text-wrap: balance; }
+.cupones__intro { font-size: 1rem; line-height: 1.55; color: var(--beige); max-width: 34ch; }
+
+.cupones__list { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+
+/* Cada cupón es una tarjeta que gira */
+.coupon {
+  display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer;
+  perspective: 1000px; -webkit-perspective: 1000px; color: inherit; text-align: center;
+}
+.coupon:focus-visible { outline: 2px solid var(--ivory); outline-offset: 4px; border-radius: 8px; }
+.coupon__inner {
+  display: grid; width: 100%; transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  transition: transform .8s cubic-bezier(.45, .05, .25, 1);
+}
+.coupon.is-flipped .coupon__inner { transform: rotateY(180deg); }
+
+/* Las dos caras ocupan el mismo lugar; la altura se adapta a la que tenga más texto */
+.coupon__face {
+  grid-area: 1 / 1; min-height: 150px; padding: 20px 22px; border-radius: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: var(--paper, #F6EFE2); color: #4A1220;
+  box-shadow: 0 12px 24px rgba(0,0,0,.45);
+  outline: 1.5px dashed rgba(201,162,75,.8); outline-offset: -9px;
+}
+.coupon__back { transform: rotateY(180deg); background: linear-gradient(160deg, #F6EFE2, #EFE3CB); }
+
+.coupon__emoji { font-size: 2rem; line-height: 1; }
+.coupon__name { font-family: var(--font-title); font-style: italic; font-weight: 600; font-size: clamp(1.4rem, 6vw, 1.7rem); line-height: 1.15; color: var(--cherry); }
+.coupon__tap { font-family: var(--font-hand); font-size: 1.2rem; color: #9C7A2E; }
+.coupon__desc { font-family: var(--font-title); font-weight: 500; font-size: clamp(1.15rem, 5vw, 1.3rem); line-height: 1.45; color: #4A1220; overflow-wrap: break-word; }
+.coupon__ok { font-family: var(--font-hand); font-size: 1.15rem; color: #9C7A2E; }
+
+@media (prefers-reduced-motion: reduce) { .coupon__inner { transition-duration: .01s; } }

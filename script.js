@@ -587,8 +587,19 @@ $("#memories-continue").addEventListener("click", () => changeStage("stage-playl
 /* =====================================================================
    ETAPA 5 y 6 — "Y ESA ERES TÚ…" y "Y PARA TERMINAR…"
    ===================================================================== */
-// Playlist -> "Y esa eres tú…" -> "Y para terminar…"
-$("#playlist-continue").addEventListener("click", () => changeStage("stage-tu"), { once: true });
+// Playlist -> Cupones -> "Y esa eres tú…" -> "Y para terminar…"
+$("#playlist-continue").addEventListener("click", () => changeStage("stage-cupones"), { once: true });
+
+// Cupones: cada tarjeta se voltea al tocarla (y se puede volver a tocar para cerrarla)
+document.querySelectorAll(".coupon").forEach((c) => {
+  c.addEventListener("click", () => {
+    const flipped = c.classList.toggle("is-flipped");
+    c.setAttribute("aria-pressed", String(flipped));
+  });
+});
+// Cupones -> "Y esa eres tú…"
+$("#cupones-continue").addEventListener("click", () => changeStage("stage-tu"), { once: true });
+
 $("#tu-continue").addEventListener("click", () => changeStage("stage-final"), { once: true });
 
 // Tarjeta final: al tocarla se abre y aparece la frase

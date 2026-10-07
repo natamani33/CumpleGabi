@@ -25,37 +25,58 @@
                 <div class="cake__glow" aria-hidden="true"></div>
                 <svg class="cake__art" viewBox="0 0 240 250" role="img" aria-label="Torta de cumpleaños con una vela encendida">
           <defs>
-            <radialGradient id="glow"><stop offset="0" stop-color="#FFD98A" stop-opacity=".55"/><stop offset="1" stop-color="#FFD98A" stop-opacity="0"/></radialGradient>
-            <linearGradient id="fire" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#F29A38"/><stop offset="1" stop-color="#FFE9A8"/></linearGradient>
+            <radialGradient id="glow">
+              <stop offset="0" stop-color="#FFD98A" stop-opacity=".55" />
+              <stop offset="1" stop-color="#FFD98A" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="fire" x1="0" y1="1" x2="0" y2="0">
+              <stop offset="0" stop-color="#F29A38" />
+              <stop offset="1" stop-color="#FFE9A8" />
+            </linearGradient>
           </defs>
           <!-- plato -->
-          <ellipse cx="120" cy="230" rx="108" ry="12" fill="#8A6A28"/>
-          <ellipse cx="120" cy="225" rx="104" ry="10" fill="#C9A24B"/>
+          <ellipse cx="120" cy="230" rx="108" ry="12" fill="#8A6A28" />
+          <ellipse cx="120" cy="225" rx="104" ry="10" fill="#C9A24B" />
           <!-- piso inferior -->
-          <rect x="28" y="150" width="184" height="72" rx="12" fill="#F6EFE2"/>
-          <rect x="28" y="186" width="184" height="10" fill="#8E1F36"/>
-          <g fill="#C9A24B"><circle cx="58" cy="170" r="2.5"/><circle cx="89" cy="170" r="2.5"/><circle cx="120" cy="170" r="2.5"/><circle cx="151" cy="170" r="2.5"/><circle cx="182" cy="170" r="2.5"/></g>
+          <rect x="28" y="150" width="184" height="72" rx="12" fill="#F6EFE2" />
+          <rect x="28" y="186" width="184" height="10" fill="#8E1F36" />
+          <g fill="#C9A24B">
+            <circle cx="58" cy="170" r="2.5" />
+            <circle cx="89" cy="170" r="2.5" />
+            <circle cx="120" cy="170" r="2.5" />
+            <circle cx="151" cy="170" r="2.5" />
+            <circle cx="182" cy="170" r="2.5" />
+          </g>
           <!-- piso superior -->
-          <rect x="58" y="104" width="124" height="50" rx="10" fill="#8E1F36"/>
-          <rect x="58" y="104" width="124" height="14" rx="7" fill="#F6EFE2"/>
-          <g fill="#F6EFE2"><circle cx="76" cy="119" r="6"/><circle cx="98" cy="121" r="6"/><circle cx="142" cy="121" r="6"/><circle cx="164" cy="119" r="6"/></g>
+          <rect x="58" y="104" width="124" height="50" rx="10" fill="#8E1F36" />
+          <rect x="58" y="104" width="124" height="14" rx="7" fill="#F6EFE2" />
+          <g fill="#F6EFE2">
+            <circle cx="76" cy="119" r="6" />
+            <circle cx="98" cy="121" r="6" />
+            <circle cx="142" cy="121" r="6" />
+            <circle cx="164" cy="119" r="6" />
+          </g>
           <!-- cerezas -->
-          <circle cx="90" cy="98" r="7" fill="#A3162F"/><circle cx="150" cy="98" r="7" fill="#A3162F"/>
-          <circle cx="88" cy="95" r="2" fill="#fff" opacity=".6"/><circle cx="148" cy="95" r="2" fill="#fff" opacity=".6"/>
+          <circle cx="90" cy="98" r="7" fill="#A3162F" />
+          <circle cx="150" cy="98" r="7" fill="#A3162F" />
+          <circle cx="88" cy="95" r="2" fill="#fff" opacity=".6" />
+          <circle cx="148" cy="95" r="2" fill="#fff" opacity=".6" />
           <!-- vela -->
-          <rect x="116" y="58" width="8" height="46" rx="2" fill="#F6EFE2"/>
-          <rect x="116" y="70" width="8" height="4" fill="#C9A24B"/><rect x="116" y="84" width="8" height="4" fill="#C9A24B"/>
-          <line x1="120" y1="58" x2="120" y2="52" stroke="#3a1a1a" stroke-width="1.5"/>
+          <rect x="116" y="58" width="8" height="46" rx="2" fill="#F6EFE2" />
+          <rect x="116" y="70" width="8" height="4" fill="#C9A24B" />
+          <rect x="116" y="84" width="8" height="4" fill="#C9A24B" />
+          <line x1="120" y1="58" x2="120" y2="52" stroke="#3a1a1a" stroke-width="1.5" />
           <!-- llama -->
           <g class="flame" transform="translate(120 52)">
-            <circle class="flame__glow" r="22" fill="url(#glow)"/>
+            <circle class="flame__glow" r="22" fill="url(#glow)" />
             <g class="flame__body">
-              <path d="M0 -26 C9 -16 11 -7 0 0 C-11 -7 -9 -16 0 -26Z" fill="url(#fire)"/>
-              <ellipse cx="0" cy="-6" rx="3" ry="5" fill="#FFF6DA"/>
+              <path d="M0 -26 C9 -16 11 -7 0 0 C-11 -7 -9 -16 0 -26Z" fill="url(#fire)" />
+              <ellipse cx="0" cy="-6" rx="3" ry="5" fill="#FFF6DA" />
             </g>
           </g>
           <!-- humo -->
-          <path class="smoke" d="M120 50 c-7 -10 7 -16 0 -28 c-5 -8 3 -12 0 -18" fill="none" stroke="#F6EFE2" stroke-width="2" stroke-linecap="round"/>
+          <path class="smoke" d="M120 50 c-7 -10 7 -16 0 -28 c-5 -8 3 -12 0 -18" fill="none" stroke="#F6EFE2"
+            stroke-width="2" stroke-linecap="round" />
         </svg>
                 <!-- Zona táctil de la vela (botón real = accesible) -->
                 <button class="candle-hit" id="candle" type="button" disabled aria-label="Apagar la vela"></button>
@@ -88,9 +109,9 @@
         <svg width="0" height="0" style="position:absolute" aria-hidden="true">
       <symbol id="flor" viewBox="0 0 40 40">
         <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
-          <circle cx="20" cy="20" r="3"/>
-          <path d="M20 17C16 9 24 9 20 17M23 20C31 16 31 24 23 20M20 23C24 31 16 31 20 23M17 20C9 24 9 16 17 20"/>
-          <path d="M20 28C20 34 16 37 12 38M20 31C24 33 27 33 30 31"/>
+          <circle cx="20" cy="20" r="3" />
+          <path d="M20 17C16 9 24 9 20 17M23 20C31 16 31 24 23 20M20 23C24 31 16 31 20 23M17 20C9 24 9 16 17 20" />
+          <path d="M20 28C20 34 16 37 12 38M20 31C24 33 27 33 30 31" />
         </g>
       </symbol>
     </svg>
@@ -106,7 +127,9 @@
                     <div class="cover__flip">
                         <div class="cover__face cover__front">
                             <div class="cover__frame">
-                                <svg class="cover__flor" aria-hidden="true"><use href="#flor"/></svg>
+                                <svg class="cover__flor" aria-hidden="true">
+                  <use href="#flor" />
+                </svg>
                                 <p class="cover__pre">Para</p>
                                 <h2 class="cover__name" data-nombre></h2>
                                 <span class="cover__line" aria-hidden="true"></span>
@@ -115,10 +138,11 @@
                             <!-- Candado: al tocarlo se desbloquea el diario -->
                             <button class="lock" id="lock" type="button" aria-label="Desbloquear el diario">
                 <svg viewBox="0 0 48 56" aria-hidden="true">
-                  <path class="lock__shackle" d="M14 27V18a10 10 0 0 1 20 0v9" fill="none" stroke="#E3C98A" stroke-width="4" stroke-linecap="round"/>
-                  <rect class="lock__body" x="8" y="26" width="32" height="26" rx="6"/>
-                  <circle cx="24" cy="36" r="3.4" fill="#5C1426"/>
-                  <rect x="22.6" y="38" width="2.8" height="7" rx="1.4" fill="#5C1426"/>
+                  <path class="lock__shackle" d="M14 27V18a10 10 0 0 1 20 0v9" fill="none" stroke="#E3C98A"
+                    stroke-width="4" stroke-linecap="round" />
+                  <rect class="lock__body" x="8" y="26" width="32" height="26" rx="6" />
+                  <circle cx="24" cy="36" r="3.4" fill="#5C1426" />
+                  <rect x="22.6" y="38" width="2.8" height="7" rx="1.4" fill="#5C1426" />
                 </svg>
               </button>
                         </div>
@@ -132,11 +156,15 @@
                 <p class="diary__hint" id="diary-hint">toca el candado</p>
                 <div class="controls" id="controls">
                     <button class="nav" id="prev" type="button" aria-label="Página anterior">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
           </button>
                     <span class="controls__count" id="counter" aria-live="polite"></span>
                     <button class="nav" id="next" type="button" aria-label="Página siguiente">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
           </button>
                     <!-- Solo aparece en la última página -->
                     <button class="btn btn--show diary__continue" id="diary-continue" type="button">Continuar →</button>
@@ -172,16 +200,21 @@
                 <!-- Flechas y contador -->
                 <div class="carousel__nav">
                     <button class="nav" id="memory-prev" type="button" aria-label="Recuerdo anterior">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
           </button>
                     <span class="controls__count" id="memory-counter" aria-live="polite"></span>
                     <button class="nav" id="memory-next" type="button" aria-label="Recuerdo siguiente">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 5l7 7-7 7" />
+            </svg>
           </button>
                 </div>
 
                 <!-- Botón que descubre la descripción -->
-                <button class="memory__btn" id="memory-btn" type="button" aria-expanded="false" aria-controls="memory-reveal">♡ Lo que recuerdo de ese día</button>
+                <button class="memory__btn" id="memory-btn" type="button" aria-expanded="false" aria-controls="memory-reveal">♡
+          Lo que recuerdo de ese día</button>
                 <div class="reveal" id="memory-reveal">
                     <div class="reveal__inner">
                         <div class="reveal__card">
@@ -222,6 +255,94 @@
             <!-- Pasa a la siguiente etapa -->
             <button class="btn btn--show playlist__fade" id="playlist-continue" type="button">Continuar →</button>
 
+        </div>
+    </section>
+
+    <!-- ETAPA: CUPONES -->
+    <section class="stage" id="stage-cupones">
+        <div class="stage__inner stage__inner--cupones">
+
+            <h2 class="cupones__title cupones__fade">Cupones para ti</h2>
+            <span class="memories__line cupones__fade" aria-hidden="true"></span>
+            <p class="cupones__intro cupones__fade">Puedes redimir cualquiera de estos en cualquier momento.<br>No tienen fecha de vencimiento, pero sí dependen de que nos pongamos de acuerdo JAJAJA.</p>
+
+            <div class="cupones__list cupones__fade">
+
+                <button class="coupon" type="button" aria-pressed="false">
+          <span class="coupon__inner">
+            <span class="coupon__face coupon__front">
+
+              <span class="coupon__name">Tú eliges la película</span>
+              <span class="coupon__tap">toca para abrir</span>
+            </span>
+            <span class="coupon__face coupon__back">
+              <span class="coupon__desc">Vale por una película de tu elección.</span>
+              <span class="coupon__ok">♡ cupón válido ♡</span>
+            </span>
+          </span>
+        </button>
+
+                <button class="coupon" type="button" aria-pressed="false">
+          <span class="coupon__inner">
+            <span class="coupon__face coupon__front">
+
+              <span class="coupon__name">Plan Armar un LEGO</span>
+              <span class="coupon__tap">toca para abrir</span>
+            </span>
+            <span class="coupon__face coupon__back">
+              <span class="coupon__desc">Vale por otro plan LEGO para construir algo juntas.</span>
+              <span class="coupon__ok">♡ cupón válido ♡</span>
+            </span>
+          </span>
+        </button>
+
+                <button class="coupon" type="button" aria-pressed="false">
+          <span class="coupon__inner">
+            <span class="coupon__face coupon__front">
+
+              <span class="coupon__name">Heladito humilde</span>
+              <span class="coupon__tap">toca para abrir</span>
+            </span>
+            <span class="coupon__face coupon__back">
+              <span class="coupon__desc">Vale por un heladito sencillo, porque tampoco somos millonarias JAJAJA.</span>
+              <span class="coupon__ok">♡ cupón válido ♡</span>
+            </span>
+          </span>
+        </button>
+
+                <button class="coupon" type="button" aria-pressed="false">
+          <span class="coupon__inner">
+            <span class="coupon__face coupon__front">
+
+              <span class="coupon__name">Vamos al centro</span>
+              <span class="coupon__tap">toca para abrir</span>
+            </span>
+            <span class="coupon__face coupon__back">
+              <span class="coupon__desc">Vale por salir al centro, caminar, mirar tiendas, comer algo y ver qué
+                terminamos haciendo.</span>
+              <span class="coupon__ok">♡ cupón válido ♡</span>
+            </span>
+          </span>
+        </button>
+
+                <button class="coupon" type="button" aria-pressed="false">
+          <span class="coupon__inner">
+            <span class="coupon__face coupon__front">
+
+              <span class="coupon__name">Tengo hambre</span>
+              <span class="coupon__tap">toca para abrir</span>
+            </span>
+            <span class="coupon__face coupon__back">
+              <span class="coupon__desc">Se activa cuando digas “tengo hambre”, incluso si acabamos de comer hace 20
+                minutos JAJAJA.</span>
+              <span class="coupon__ok">♡ cupón válido ♡</span>
+            </span>
+          </span>
+        </button>
+
+            </div>
+
+            <button class="btn btn--show cupones__fade" id="cupones-continue" type="button">Continuar →</button>
         </div>
     </section>
 
@@ -278,14 +399,19 @@
             <!-- Tarjeta sellada: al tocarla se abre y muestra la frase final -->
             <button class="final__card final__fade" id="final-card" type="button" aria-expanded="false" aria-label="Abrir la tarjeta">
         <span class="final__closed">
-          <svg class="final__seal" aria-hidden="true"><use href="#flor"/></svg>
+          <svg class="final__seal" aria-hidden="true">
+            <use href="#flor" />
+          </svg>
           <span class="final__tap">toca para abrir</span>
         </span>
         <span class="final__open" aria-hidden="true">
-          <span class="final__phrase">No es que no pueda vivir sin ti, es que simplemente no quiero vivir en un mundo en el que tu risa no exista.</span>
+          <span class="final__phrase">No es que no pueda vivir sin ti, es que simplemente no quiero vivir en un mundo en
+            el que tu risa no exista.</span>
         </span>
       </button>
-            <svg class="final__flor" aria-hidden="true"><use href="#flor"/></svg>
+            <svg class="final__flor" aria-hidden="true">
+        <use href="#flor" />
+      </svg>
 
         </div>
     </section>
